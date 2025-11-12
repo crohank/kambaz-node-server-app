@@ -1,7 +1,7 @@
 import "dotenv/config";
 import session from "express-session";
 import express from "express";
-import Hello from "./hello.js";
+import Hello from "./Hello.js";
 import Lab5 from "./Lab5/index.js";
 import CourseRoutes from "./Kambaz/Courses/routes.js";
 import ModulesRoutes from "./Kambaz/Modules/routes.js";

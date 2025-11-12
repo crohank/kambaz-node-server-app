@@ -18,11 +18,12 @@ const isProduction = process.env.NODE_ENV === "production";
 
 const clientUrl = process.env.CLIENT_URL || "http://localhost:3000";
 
+const allowedOrigin = process.env.CLIENT_URL || "http://localhost:3000";
+
 app.use(cors({
-    origin: clientUrl,
+    origin: allowedOrigin,
     credentials: true,
 }));
-
 app.use(express.json());
 
 const sessionOptions = {
@@ -34,8 +35,10 @@ const sessionOptions = {
         httpOnly: true,
         secure: isProduction,
         sameSite: isProduction ? "none" : "lax",
+        domain: isProduction ? ".render.com" : undefined, 
     },
 };
+
 
 app.use(session(sessionOptions));
 

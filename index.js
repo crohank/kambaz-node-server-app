@@ -26,6 +26,8 @@ const sessionOptions = {
     saveUninitialized: false,
 };
 
+
+
 if (process.env.SERVER_ENV !== "development") {
     sessionOptions.proxy = true;
     sessionOptions.cookie = {

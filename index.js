@@ -1,7 +1,6 @@
 import "dotenv/config";
 import session from "express-session";
 import express from "express";
-import Hello from "./Hello.js";
 import Lab5 from "./Lab5/index.js";
 import CourseRoutes from "./Kambaz/Courses/routes.js";
 import ModulesRoutes from "./Kambaz/Modules/routes.js";
@@ -10,6 +9,7 @@ import EnrollmentsRoutes from "./Kambaz/Enrollments/routes.js";
 import db from "./Kambaz/Database/index.js";
 import UserRoutes from "./Kambaz/Users/routes.js";
 import cors from "cors";
+import Hello from "./Hello.js";
 
 const app = express();
 
@@ -44,7 +44,6 @@ CourseRoutes(app, db);
 ModulesRoutes(app, db);
 AssignmentsRoutes(app, db);
 EnrollmentsRoutes(app, db);
-
 Lab5(app);
 Hello(app);
 

@@ -16,9 +16,12 @@ const app = express();
 
 const isProduction = process.env.NODE_ENV === "production";
 
-const clientUrl = process.env.CLIENT_URL || "http://localhost:3000";
+// FIX: Trim the environment variable value to ensure no invalid whitespace
+// or control characters are included in the origin string.
+const rawClientUrl = process.env.CLIENT_URL || "http://localhost:3000";
+const clientUrl = rawClientUrl.trim();
 
-const allowedOrigin = process.env.CLIENT_URL || "http://localhost:3000";
+const allowedOrigin = clientUrl; // Use the trimmed value
 
 app.use(cors({
     origin: allowedOrigin,
@@ -35,7 +38,10 @@ const sessionOptions = {
         httpOnly: true,
         secure: isProduction,
         sameSite: isProduction ? "none" : "lax",
-        domain: isProduction ? ".render.com" : undefined, 
+        // Using "auto" for the domain when running in production to avoid issues
+        // with specific hosting environments like Render, unless you are sure
+        // ".render.com" is the exact domain suffix needed.
+        domain: isProduction ? undefined : undefined,
     },
 };
 

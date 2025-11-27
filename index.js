@@ -21,6 +21,7 @@ app.use(
         credentials: true,
         origin: process.env.CLIENT_URL || "http://localhost:3000",
     })
+    
 );
 
 const sessionOptions = {

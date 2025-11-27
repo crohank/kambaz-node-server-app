@@ -1,39 +1,36 @@
 import AssignmentsDao from "./dao.js";
 
-export default function AssignmentsRoutes(app, db) {
-    const dao = AssignmentsDao(db);
+export default function AssignmentsRoutes(app) {
+    const dao = AssignmentsDao();
 
-    const findAssignmentsForCourse = (req, res) => {
+    const findAssignmentsForCourse = async (req, res) => {
         const { courseId } = req.params;
-        const assignments = dao.findAssignmentsForCourse(courseId);
+        const assignments = await dao.findAssignmentsForCourse(courseId);
         res.json(assignments);
     };
 
-    const findAssignmentById = (req, res) => {
+    const findAssignmentById = async (req, res) => {
         const { assignmentId } = req.params;
-        const assignment = dao.findAssignmentById(assignmentId);
+        const assignment = await dao.findAssignmentById(assignmentId);
         if (!assignment) return res.status(404).send({ error: "Not found" });
         res.json(assignment);
     };
 
-    const createAssignmentForCourse = (req, res) => {
+    const createAssignmentForCourse = async (req, res) => {
         const { courseId } = req.params;
-        const newAssignment = dao.createAssignmentForCourse({
-            ...req.body,
-            course: courseId,
-        });
-        res.json(newAssignment);
+        const assignment = await dao.createAssignmentForCourse(courseId, req.body);
+        res.json(assignment);
     };
 
-    const deleteAssignment = (req, res) => {
+    const deleteAssignment = async (req, res) => {
         const { assignmentId } = req.params;
-        const status = dao.deleteAssignment(assignmentId);
+        const status = await dao.deleteAssignment(assignmentId);
         res.json(status);
     };
 
-    const updateAssignment = (req, res) => {
+    const updateAssignment = async (req, res) => {
         const { assignmentId } = req.params;
-        const status = dao.updateAssignment(assignmentId, req.body);
+        const status = await dao.updateAssignment(assignmentId, req.body);
         res.json(status);
     };
 

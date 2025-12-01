@@ -41,6 +41,7 @@ if (process.env.SERVER_ENV !== "development") {
     };
 }
 
+app.set('trust proxy', 1)
 app.use(session(sessionOptions));
 app.use(express.json());
 UserRoutes(app, db);

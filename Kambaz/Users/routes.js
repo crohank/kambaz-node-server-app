@@ -2,9 +2,7 @@ import UsersDao from "./dao.js";
 
 export default function UserRoutes(app) {
     const dao = UsersDao();
-    // const createUser = async (req, res) => {
-    // };
-    // const deleteUser = async (req, res) => {};
+   
 
     const deleteUser = async (req, res) => {
         const status = await dao.deleteUser(req.params.userId);
@@ -52,7 +50,6 @@ export default function UserRoutes(app) {
         }
         const currentUser = await dao.createUser(req.body);
         req.session["currentUser"] = currentUser;
-        // express-session will automatically save the session
         res.json(currentUser);
     };
     const signin = async (req, res) => {
@@ -61,7 +58,6 @@ export default function UserRoutes(app) {
 
         if (currentUser) {
             req.session["currentUser"] = currentUser;
-            // express-session will automatically save the session
             res.json(currentUser);
         } else {
             res.status(401).json({message: "Unable to login. Try again later."});

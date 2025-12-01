@@ -12,7 +12,7 @@ import UserRoutes from "./Kambaz/Users/routes.js";
 import cors from "cors";
 import Hello from "./Hello.js";
 
-const CONNECTION_STRING = process.env.DATABASE_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kambaz"
+const CONNECTION_STRING = process.env.DATABASE_CONNECTION_STRING
 mongoose.connect(CONNECTION_STRING);
 const app = express();
 
@@ -21,6 +21,7 @@ app.use(
         credentials: true,
         origin: process.env.CLIENT_URL || "http://localhost:3000",
     })
+
 );
 
 const sessionOptions = {
@@ -36,11 +37,13 @@ if (process.env.SERVER_ENV !== "development") {
     sessionOptions.cookie = {
         sameSite: "none",
         secure: true,
+        domain: process.env.SERVER_URL,
     };
 }
-
+app.set("trust proxy", 1);
 app.use(session(sessionOptions));
 app.use(express.json());
+app.set("trust proxy", 1);
 UserRoutes(app, db);
 CourseRoutes(app, db);
 ModulesRoutes(app, db);

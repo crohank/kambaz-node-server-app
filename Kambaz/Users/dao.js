@@ -15,7 +15,7 @@ export default function UsersDao() {
     const deleteUser = (userId) => model.findByIdAndDelete( userId );
     const findUsersByRole = (role) => model.find({ role: role });
     const findUsersByPartialName = (partialName) => {
-        const regex = new RegExp(partialName, "i"); // 'i' makes it case-insensitive
+        const regex = new RegExp(partialName, "i"); 
         return model.find({
             $or: [{ firstName: { $regex: regex } }, { lastName: { $regex: regex } }],
         });
